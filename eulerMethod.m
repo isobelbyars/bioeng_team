@@ -28,8 +28,8 @@ Yout = zeros(Nfunc,N+1);
 for i=1:Nfunc
     tiyi = t0y0(i,:);
     ti = tiyi(1);yi = tiyi(2);
-    Tidx = find(Tout==ti); % Index of Yi in Yout via equivalent Ti index
-    Yout(i,Tidx) = yi;
+    % Index of Yi in Yout via equivalent Ti index
+    Yout(i,Tout==ti) = yi;
 end
 
 % Main loop through each step
@@ -38,7 +38,16 @@ for i=1:N
     Tn = Tout(i); % Get current T val
 
     % Apply Euler's Method to Funcs & record result
-    Yout(:,i+1) = Yn + (func(Tn,Yn).*h);
+    result = Yn + (func(Tn,Yn).*h);
+    % Check if next cells have existing value
+    if any(Yout(:,i+1))
+        % If yes, only overwite cells with 0
+        % Needed to avoid overwriting new ODE start values
+        idx = Yout(:,i+1)==0;
+        Yout(idx,i+1) = result(idx);
+    else
+        Yout(:,i+1) = result;
+    end
 end
 
 Tout = Tout.';

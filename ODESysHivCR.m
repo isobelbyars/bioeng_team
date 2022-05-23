@@ -1,4 +1,4 @@
-function dydt=ODESysHivCR(t,y,Rc)
+function dydt=ODESysHivCR(~,y,Rc)
 % Name: Oliver Gallo
 % Date: 20220523
 % Description: Custom Encoding of HIV Cross-Reactivity ODE System
@@ -19,8 +19,9 @@ function dydt=ODESysHivCR(t,y,Rc)
 
     % Generate all Vi, Xi required
     for i=1:2:length(y)-1
-        dydt(i) = r*y(i) - p*y(i)*y(i+1) - q*y(i)*y(end);
-        dydt(i+1) = c*y(i) - b*y(i+1);
+        Vi = y(i);Xi = y(i+1);
+        dydt(i) = r*Vi - p*Vi*Xi - q*Vi*y(end);
+        dydt(i+1) = c*Vi - b*Xi;
     end
     
     % Define V as sum of all Vi
