@@ -24,8 +24,8 @@ function MultiGraphView(Xdata,Ydata,MainTitle,SubTitles,Axistitles, ...
 %
 
 % Determine number of rows required
-Nplots = (size(Ydata,2)-1)/2 + 1;
-Nrows = ceil(Nplots/Ncols) + 1; % +1 accounts for extra row for final plot
+Nplots = (size(Ydata,2)-2)/2 + 2;
+Nrows = ceil((Nplots-2)/Ncols) + 2;
 
 %% Plotting
 MP = figure('Name',MainTitle,'NumberTitle','off');
@@ -46,14 +46,23 @@ for i=1:2:(Nplots-1)*2
     end
 end
 
-% Plot final plot
+% Plot Penultimate plot
+penultimate_row = (Nrows*Ncols-2*Ncols+1:1:(Nrows-1)*Ncols);
+subplot(Nrows,Ncols,penultimate_row)
+plot(Xdata,Ydata(:,end-1))
+xlim(Xaxis)
+xlabel(Axistitles{1})
+ylabel(Axistitles{3})
+title(SubTitles{2})
+
+% Plot Final plot
 final_row = (Nrows*Ncols-Ncols+1:1:Nrows*Ncols);
 subplot(Nrows,Ncols,final_row)
 plot(Xdata,Ydata(:,end))
 xlim(Xaxis)
 xlabel(Axistitles{1})
-ylabel(Axistitles{3})
-title(SubTitles{2})
+ylabel(Axistitles{4})
+title(SubTitles{3})
 
 %Add Title to overall subplot
 sgtitle(MainTitle)

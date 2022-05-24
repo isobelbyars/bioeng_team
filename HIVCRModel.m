@@ -41,6 +41,12 @@ t0y0 = [baseInit;mutationsInit;CRInit];
 
 [Tout,Yout] = eulerMethod(@(t,y) ODESysHivCR(t,y,Rc),tspan,t0y0,h);
 
+%% Compute Viral Load over T
+VIdx = (1:2:Nstrains*2);
+VLevels = Yout(:,VIdx);
+Vsum = sum(VLevels,2); % Sum across VLevel rows
+Yout = [Yout,Vsum];
+
 %% Data Export
 OutName = 'CRModelData.csv';
 OutHeader = {'Time [s]','V0','X0'}; % Account for base case
@@ -49,6 +55,7 @@ for i=1:2:(Nstrains-1)*2 % Generate Header Data for all Vi, Xi
     OutHeader(i+4) = {sprintf('X%i',i)};
 end
 OutHeader(end+1) = {'Z'};
+OutHeader(end+1) = {'V'};
 OutData = num2cell([Tout,Yout]);
 OutFinal = [OutHeader;OutData];
 dataWrite(OutFinal,OutName)
@@ -56,9 +63,10 @@ dataWrite(OutFinal,OutName)
 %% Visualisations
 % Figure titles
 MTitle = 'HIV Cross-Reactivity Model (Q2c)';
-STitles = {'Hiv Strain %i','Cross Reactive Immunity'};
+STitles = {'Hiv Strain %i','Cross Reactive Immunity',...
+    'Total HIV Pathogen Level'};
 ATitles = {'Time [s]', 'Level/Magnitude',...
-    'CR-Immune Magnitude'};
+    'CR-Immune Magnitude','Total Viral Level'};
 LegNames = {'HIV Pathogen Level',...
     'Strain-Specific Immune Response Magnitude'};
 Ncols = 4;
