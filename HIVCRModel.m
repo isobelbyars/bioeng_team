@@ -73,3 +73,10 @@ Ncols = 4;
 Fname = 'HIVCRFig.fig';
 
 MultiGraphView(Tout,Yout,MTitle,STitles,ATitles,LegNames,Ncols,tspan,Fname)
+
+% Graph total viral load in a separate figure
+figure(2)
+plot(Tout,Yout(:,end))
+title("Viral load")
+xlabel("Time")
+ylabel("Viral load")

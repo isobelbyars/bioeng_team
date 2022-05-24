@@ -28,5 +28,12 @@ ylabel('Magnitude')
 ylim([0 inf])
 title('Pathogen level and immune response over time')
 legend('magnitude of immune response','level of viral pathogen in bloodstream')
-
+%
+% Graph viral load on its own
+figure(2)
+hold on
+plot(t,y(:,2),'LineWidth',1.5)
+xlabel('Time')
+ylabel('Viral load')
+title('Viral load')
 

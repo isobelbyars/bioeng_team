@@ -83,3 +83,9 @@ title("Viral load (Number of strains present)")
 xlabel("Time")
 ylabel("Number of strains")
 %
+% Generate viral load alone in a separate figure
+figure(3)
+plot(viral_load_times,viral_load)
+title("Viral load")
+xlabel("Time")
+ylabel("Level of pathogen")
