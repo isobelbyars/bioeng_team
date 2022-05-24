@@ -40,3 +40,15 @@ CRInit = [0,0];
 t0y0 = [baseInit;mutationsInit;CRInit];
 
 [Tout,Yout] = eulerMethod(@(t,y) ODESysHivCR(t,y,Rc),tspan,t0y0,h);
+
+%% Data Export
+OutName = 'CRModelData.csv';
+OutHeader = {'Time [s]','V0','X0'}; % Account for base case
+for i=1:2:(Nstrains-1)*2 % Generate Header Data for all Vi, Xi
+    OutHeader(i+3) = {sprintf('V%i',i)};
+    OutHeader(i+4) = {sprintf('X%i',i)};
+end
+OutHeader(end+1) = {'Z'};
+OutData = num2cell([Tout,Yout]);
+OutFinal = [OutHeader;OutData];
+dataWrite(OutFinal,OutName)
