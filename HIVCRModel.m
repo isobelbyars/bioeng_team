@@ -52,3 +52,16 @@ OutHeader(end+1) = {'Z'};
 OutData = num2cell([Tout,Yout]);
 OutFinal = [OutHeader;OutData];
 dataWrite(OutFinal,OutName)
+
+%% Visualisations
+% Figure titles
+MTitle = 'HIV Cross-Reactivity Model (Q2c)';
+STitles = {'Hiv Strain %i','Cross Reactive Immunity'};
+ATitles = {'Time [s]', 'Level/Magnitude',...
+    'CR-Immune Magnitude'};
+LegNames = {'HIV Pathogen Level',...
+    'Strain-Specific Immune Response Magnitude'};
+Ncols = 4;
+Fname = 'HIVCRFig.fig';
+
+MultiGraphView(Tout,Yout,MTitle,STitles,ATitles,LegNames,Ncols,tspan,Fname)
