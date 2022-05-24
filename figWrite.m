@@ -24,6 +24,7 @@ function figWrite(OutFig,fullName)
                 saveas(OutFig,newName)
                 break
             end
+            n = n+1;
         end
     end
 end

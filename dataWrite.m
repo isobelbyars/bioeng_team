@@ -24,6 +24,7 @@ function dataWrite(OutData,fullName)
                 writecell(OutData,newName)
                 break
             end
+            n = n+1;
         end
     end
 end

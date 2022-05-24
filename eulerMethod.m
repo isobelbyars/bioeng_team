@@ -38,7 +38,7 @@ for i=1:N
     Tn = Tout(i); % Get current T val
 
     % Apply Euler's Method to Funcs & record result
-    result = Yn + (func(Tn,Yn).*h);
+    result = abs(Yn + (func(Tn,Yn).*h)); % Required as Results >=0
     % Check if next cells have existing value
     if any(Yout(:,i+1))
         % If yes, only overwite cells with 0

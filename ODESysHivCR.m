@@ -20,7 +20,7 @@ function dydt=ODESysHivCR(~,y,Rc)
     Z = y(end);
 
     % Define V as sum of all Vi
-    idxVi = (1:2:length(y)-2); % Indexes of Vi in dydt
+    idxVi = (1:2:length(y)-2); % Indexes of Vi in y
     V = sum(y(idxVi));
 
     % Generate all Vi, Xi required

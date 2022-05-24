@@ -16,11 +16,11 @@ function dydt=ODESysHivII(~,y,Rc)
     r = Rc(1);p = Rc(2);q = Rc(3);c = Rc(4);k = Rc(5);b = Rc(6);u = Rc(7);
 
     dydt = zeros(length(y),1);
-    
+
     Z = y(end);
 
     % Define V as sum of all Vi
-    idxVi = (1:2:length(y)-2); % Indexes of Vi in dydt
+    idxVi = (1:2:length(y)-2); % Indexes of Vi in y
     V = sum(y(idxVi));
 
     % Generate all Vi, Xi required
@@ -30,7 +30,6 @@ function dydt=ODESysHivII(~,y,Rc)
         dydt(i+1) = c*Vi - b*Xi - u*V*Xi;
     end
     
-
 
     % Define Z equation
     dydt(end) = k*V - b*Z - u*V*Z;

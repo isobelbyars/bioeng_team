@@ -11,12 +11,26 @@ clear
 close all
 clc
 
-%% Set Parameters
-r = 2.5;p = 2;c = 0.1;b = 0.1;q = 1;k = 0.1;u = 2; % ODE System parameters
-h = 0.1; % Step size/dt
-P = 0.1; % Probablity of new strain arising
+%% Set Parameters from file
+PFile = load('Q2dVar.mat');
+SetNum = 1;
+
+
+switch SetNum
+    case 1
+        PSet = num2cell(PFile.Set1);
+    case 2
+        PSet = num2cell(PFile.Set2);
+    case 3
+        PSet = num2cell(PFile.Set3);
+end
+
+[r,p,q,c,k,b,u,P,tf] = PSet{:};
+h = 0.01; % Step size
+
+% Assign Related Paramaters
 Pdt = P*h; % Probablity of new strain arising over each dt increment
-t0 = 0;tf = 100;tspan = [t0,tf];
+t0 = 0;tspan = [t0,tf];
 Vn_start = 0.01; % Viral load start value
 T = (t0:h:tf); % T-val vector
 Nt = length(T); % Number of time samples
@@ -25,7 +39,7 @@ Rc = [r;p;q;c;k;b;u]; % ODE System Rate Constant Vector
 %% Generate Stochastic Mutant HIV Strain Data
 Gen_HIVStrains = HIVStochGen(P,h,t0,tf);
 HIVStrains = Gen_HIVStrains(:,Gen_HIVStrains(1,:)~=0); % Only keep generated strains
-Nstrains = length(HIVStrains) + 1; % +1 accounts for base strain
+Nstrains = size(HIVStrains,2) + 1; % +1 accounts for base strain
 
 %% Solve ODEs for HIV strains
 % Create Array of initial conditions
@@ -48,7 +62,7 @@ Vsum = sum(VLevels,2); % Sum across VLevel rows
 Yout = [Yout,Vsum];
 
 %% Data Export
-OutName = 'CRModelData.csv';
+OutName = 'IIModelData.csv';
 OutHeader = {'Time [s]','V0','X0'}; % Account for base case
 for i=1:2:(Nstrains-1)*2 % Generate Header Data for all Vi, Xi
     OutHeader(i+3) = {sprintf('V%i',i)};
@@ -70,6 +84,6 @@ ATitles = {'Time [s]', 'Level/Magnitude',...
 LegNames = {'HIV Pathogen Level',...
     'Strain-Specific Immune Response Magnitude'};
 Ncols = 4;
-Fname = 'HIVCRFig.fig';
+Fname = 'HIVIIFig.fig';
 
 MultiGraphView(Tout,Yout,MTitle,STitles,ATitles,LegNames,Ncols,tspan,Fname)
