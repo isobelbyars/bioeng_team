@@ -21,13 +21,13 @@ figure(1)
 hold on
 times = 0:10:90;
 num_strains = 1:10; % 1 new strain every 10 time steps, starting at 1
-plot(times, num_strains,'LineWidth',1.5);
+plot(times, num_strains,'LineWidth',1.5,'Marker','o');
 title("Viral load (Number of strains present)")
 xlabel("Time")
 ylabel("Number of strains")
 %
 % Plot the stochastic viral load over 10 instances
-for i=1:10
+for i=1:5
     % Generate viral load over time in one instance
     tspan = [0,100];
     x = HIVStochGen(P,h,tspan(1),tspan(2));
@@ -39,7 +39,7 @@ for i=1:10
     highest_load = strain_nums(length(strain_nums));
     start_times_final = [0, start_times, 100];
     strain_nums_final = [1, strain_nums, highest_load];
-    plot(start_times_final, strain_nums_final,'Color','r','LineWidth',1.5,'LineStyle','--');
+    plot(start_times_final, strain_nums_final,'Color','r','LineWidth',1.5,'LineStyle','--','Marker','o');
 end
 %
 % Complete the graph
