@@ -13,7 +13,7 @@ clc
 
 %% Set Parameters
 r = 2.5;p = 2;c = 0.1;b = 0.1;q = 1;k = 0.1; % ODE System parameters
-h = 0.1; % Step size/dt
+h = 0.01; % Step size/dt
 P = 0.1; % Probablity of new strain arising
 Pdt = P*h; % Probablity of new strain arising over each dt increment
 t0 = 0;tf = 100;tspan = [t0,tf];
@@ -48,7 +48,7 @@ Vsum = sum(VLevels,2); % Sum across VLevel rows
 Yout = [Yout,Vsum];
 
 %% Data Export
-OutName = 'CRModelData.csv';
+OutName = 'outputCR\CRModelData.csv';
 OutHeader = {'Time [s]','V0','X0'}; % Account for base case
 for i=1:2:(Nstrains-1)*2 % Generate Header Data for all Vi, Xi
     OutHeader(i+3) = {sprintf('V%i',i)};
@@ -70,6 +70,6 @@ ATitles = {'Time [s]', 'Level/Magnitude',...
 LegNames = {'HIV Pathogen Level',...
     'Strain-Specific Immune Response Magnitude'};
 Ncols = 4;
-Fname = 'HIVCRFig.fig';
+Fname = 'outputCR\HIVCRFig.fig';
 
 MultiGraphView(Tout,Yout,MTitle,STitles,ATitles,LegNames,Ncols,tspan,Fname)

@@ -30,14 +30,18 @@ Nrows = ceil((Nplots-2)/Ncols) + 2;
 %% Plotting
 MP = figure('Name',MainTitle,'NumberTitle','off');
 subplot(Nrows,Ncols,1)
-% Plot all basic plots
 
-for i=1:2:(Nplots-1)*2
+% Find Vi, Xi Max
+VXMax = max(Ydata(:,1:end-3),[],'all');
+
+% Plot all basic plots
+for i=1:2:(Nplots-2)*2
     subplot(Nrows,Ncols,ceil(i/2))
     CurVi = Ydata(:,i);
     CurXi = Ydata(:,i+1);
     plot(Xdata,CurVi,'-b',Xdata,CurXi,':r')
     xlim(Xaxis)
+    ylim([0,VXMax])
     xlabel(Axistitles{1})
     ylabel(Axistitles{2})
     title(sprintf(SubTitles{1},(i-1)/2))

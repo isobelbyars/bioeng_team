@@ -13,7 +13,7 @@ clc
 
 %% Set Parameters from file
 PFile = load('Q2dVar.mat');
-SetNum = 1;
+SetNum = 3;
 
 
 switch SetNum
@@ -26,7 +26,7 @@ switch SetNum
 end
 
 [r,p,q,c,k,b,u,P,tf] = PSet{:};
-h = 0.01; % Step size
+h = 0.001; % Step size
 
 % Assign Related Paramaters
 Pdt = P*h; % Probablity of new strain arising over each dt increment
@@ -62,7 +62,7 @@ Vsum = sum(VLevels,2); % Sum across VLevel rows
 Yout = [Yout,Vsum];
 
 %% Data Export
-OutName = 'IIModelData.csv';
+OutName = 'outputII\IIModelData.csv';
 OutHeader = {'Time [s]','V0','X0'}; % Account for base case
 for i=1:2:(Nstrains-1)*2 % Generate Header Data for all Vi, Xi
     OutHeader(i+3) = {sprintf('V%i',i)};
@@ -84,6 +84,6 @@ ATitles = {'Time [s]', 'Level/Magnitude',...
 LegNames = {'HIV Pathogen Level',...
     'Strain-Specific Immune Response Magnitude'};
 Ncols = 4;
-Fname = 'HIVIIFig.fig';
+Fname = 'outputII\HIVIIFig.fig';
 
 MultiGraphView(Tout,Yout,MTitle,STitles,ATitles,LegNames,Ncols,tspan,Fname)
