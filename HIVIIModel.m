@@ -62,7 +62,7 @@ Vsum = sum(VLevels,2); % Sum across VLevel rows
 Yout = [Yout,Vsum];
 
 %% Data Export
-OutName = 'outputII\IIModelData.csv';
+OutName = 'IIModelData.csv';
 OutHeader = {'Time [s]','V0','X0'}; % Account for base case
 for i=1:2:(Nstrains-1)*2 % Generate Header Data for all Vi, Xi
     OutHeader(i+3) = {sprintf('V%i',i)};
@@ -76,7 +76,7 @@ dataWrite(OutFinal,OutName)
 
 %% Visualisations
 % Figure titles
-MTitle = 'HIV Immune Impairment Model (Q2c)';
+MTitle = 'HIV Immune Impairment Model (Q2d)';
 STitles = {'Hiv Strain %i','Cross Reactive Immunity',...
     'Total HIV Pathogen Level'};
 ATitles = {'Time [s]', 'Level/Magnitude',...
@@ -84,6 +84,6 @@ ATitles = {'Time [s]', 'Level/Magnitude',...
 LegNames = {'HIV Pathogen Level',...
     'Strain-Specific Immune Response Magnitude'};
 Ncols = 4;
-Fname = 'outputII\HIVIIFig.fig';
+Fname = 'HIVIIFig.fig';
 
 MultiGraphView(Tout,Yout,MTitle,STitles,ATitles,LegNames,Ncols,tspan,Fname)
